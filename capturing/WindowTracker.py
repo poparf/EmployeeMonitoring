@@ -52,8 +52,7 @@ class WindowTracker(Thread):
             self.window_history.append({
                 'title': self.current_window_title,
                 'start_time': self.current_window_start,
-                'duration': duration,
-                'date':
+                'duration': duration
             })
             self.logger.info(f"Window '{self.current_window_title}' active for {duration:.2f} seconds")
         
@@ -70,6 +69,8 @@ class WindowTracker(Thread):
         # Log the final window
         if self.current_window_title and self.current_window_start:
             final_duration = time.time() - self.current_window_start
+            
+            
             self.window_history.append({
                 'title': self.current_window_title,
                 'start_time': self.current_window_start,
@@ -78,33 +79,33 @@ class WindowTracker(Thread):
         self.join()
         return self.window_history
 
-def main():
-    # Configure logging
-    logging.basicConfig(
-        level=logging.INFO, 
-        format='%(asctime)s - %(levelname)s: %(message)s'
-    )
-    
-    try:
-        # Create and start the window tracker
-        tracker = WindowTracker()
-        tracker.start()
-        
-        # Let it run for a while (e.g., 5 minutes)
-        input("Press Enter to stop tracking...")
-        
-        # Stop tracking and get results
-        results = tracker.stop()
-        
-        # Display detailed results
-        print("\n--- Window Tracking Results ---")
-        for entry in results:
-            print(f"Window: {entry['title']}")
-            print(f"Duration: {entry['duration']:.2f} seconds")
-            print(f"Started at: {time.ctime(entry['start_time'])}\n")
-    
-    except Exception as e:
-        logging.error(f"Tracking failed: {e}")
 
-if __name__ == "__main__":
-    main()
+# def main():
+#     # Configure logging
+#     logging.basicConfig(
+#         level=logging.INFO, 
+#         format='%(asctime)s - %(levelname)s: %(message)s'
+#     )
+    
+#     try:
+#         # Create and start the window tracker
+#         tracker = WindowTracker()
+#         tracker.start()
+        
+#         # Let it run for a while (e.g., 5 minutes)
+#         input("Press Enter to stop tracking...")
+        
+#         # Stop tracking and get results
+#         results = tracker.stop()
+        
+#         # Display detailed results
+#         print("\n--- Window Tracking Results ---")
+#         for entry in results:
+#             print(f"Window: {entry['title']}")
+#             print(f"Duration: {entry['duration']:.2f} seconds")
+#             print(f"Started at: {time.ctime(entry['start_time'])}\n")
+    
+#     except Exception as e:
+#         logging.error(f"Tracking failed: {e}")
+        
+# main()

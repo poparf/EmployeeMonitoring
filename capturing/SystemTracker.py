@@ -41,7 +41,3 @@ class SystemTracker(Thread):
     # get the username of the user logged in windows
     def get_username(self):
         return os.getlogin()
-    
-s = SystemTracker()
-s.start()
-s.join()
