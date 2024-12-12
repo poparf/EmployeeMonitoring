@@ -6,10 +6,8 @@ import logging
 class WindowTracker(Thread):
     def __init__(self, interval=0.5, logger=None):
         """
-        Initialize the WindowTracker.
-        
-        :param interval: Time between window state checks (default 0.5 seconds)
-        :param logger: Optional logger for tracking events
+        interval: Time between window state checks (default 0.5 seconds)
+        logger: Optional logger for tracking events
         """
         super().__init__()
         self.interval = interval
@@ -39,11 +37,6 @@ class WindowTracker(Thread):
             self.logger.error(f"Window tracking error: {e}")
     
     def _log_window_change(self, new_window):
-        """
-        Log window changes and track time spent.
-        
-        :param new_window: Newly active window
-        """
         current_time = time.time()
         
         # Log previous window's duration if exists
@@ -62,9 +55,6 @@ class WindowTracker(Thread):
         
     
     def stop(self):
-        """
-        Gracefully stop the window tracking.
-        """
         self.stop_event.set() # Sets the flag to true to stop the thread
         # Log the final window
         if self.current_window_title and self.current_window_start:
