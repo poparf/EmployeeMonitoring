@@ -1,9 +1,11 @@
-from db.db_config import connection, cursor
+import sqlite3
+from db.db_config import CONNECTION_URL
 
 class PeriodicScreenshotsRepository:
     def __init__(self):
-        self.conn = connection
-        self.cursor = cursor
+        # We need to reestablish ocnnection since sqlite is not thread safe
+        self.conn = sqlite3.connect(CONNECTION_URL, check_same_thread=False)
+        self.cursor = self.conn.cursor()
 
     # Screenshots comes as a byte object already
     def insert_screenshot(self, screenshot, timestamp):
@@ -11,3 +13,6 @@ class PeriodicScreenshotsRepository:
         self.cursor.execute(query, (screenshot, timestamp))
         self.conn.commit()
         return True
+
+    def close(self):
+        self.conn.close()

@@ -1,4 +1,5 @@
 from pynput import keyboard
+import threading
 import logging
 import time
 import asyncio
@@ -33,7 +34,7 @@ def on_press(key):
 keyboardListener = keyboard.Listener(
     on_press=on_press)
 
-async def save_keystrokes():
+def save_keystrokes():
     global keystrokes
     global start_time
     print(keystrokes)
@@ -43,9 +44,14 @@ async def save_keystrokes():
     start_time = time.time()
 
 
-async def schedule_insertion():
+def schedule_insertion():
     while True:
-        await save_keystrokes()
-        await asyncio.sleep(5)
+        save_keystrokes()
+        time.sleep(5)
+print("I m running async function")
 
-asyncio.run(schedule_insertion())
+
+thread = threading.Thread(target=schedule_insertion)
+thread.start()
+
+print("Ran scheduler insertion")

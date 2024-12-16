@@ -4,6 +4,7 @@ from threading import Thread, Event
 import logging
 from db.repository.WindowTrackerRepository import WindowTrackerRepository
 
+
 class WindowTracker(Thread):
     def __init__(self, interval=0.5, logger=None):
         """
@@ -14,7 +15,6 @@ class WindowTracker(Thread):
         self.interval = interval
         self.logger = logger or logging.getLogger(__name__)
 
-        self.window_tracker_repository = WindowTrackerRepository()
         self.stop_event = Event()
         self.window_history = []
         self.current_window_start = None
@@ -29,11 +29,14 @@ class WindowTracker(Thread):
                 active_window = gw.getActiveWindow()
                 
                 if active_window:
+                    self.logger.info(f"Active window: {active_window.title}")
                     if active_window.title != self.current_window_title:
                         # Window has changed
+
                         self._log_window_change(active_window)
                 
                 time.sleep(self.interval)
+                self.logger.info("I slept enough...")
         
         except Exception as e:
             self.logger.error(f"Window tracking error: {e}")
@@ -50,7 +53,8 @@ class WindowTracker(Thread):
                 'duration': duration
             }
             self.window_history.append(new_window_history)
-            self.window_tracker_repository.insert(new_window_history)
+            window_tracker_repository = WindowTrackerRepository()
+            window_tracker_repository.insert(new_window_history)
             self.logger.info(f"Window '{self.current_window_title}' active for {duration:.2f} seconds")
 
         # Update current window tracking

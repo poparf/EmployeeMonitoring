@@ -12,8 +12,15 @@ class WindowTrackerRepository:
                             duration Integer) 
     """
     def insert(self, data):
-        self.cursor.execute("INSERT INTO ActiveWindows VALUES (?, ?, ?)", data)
+        #Window tracking error: Binding 1 has no name, but you supplied a dictionary (which has only names).
+        if isinstance(data, dict):
+            data = (data['title'], data['start_time'], data['duration'])
+        else:
+            return False
+        print(data)
+        self.cursor.execute("INSERT INTO ActiveWindows (title, start_time, duration) VALUES (?, ?, ?)", data)
         self.conn.commit()
+        return True
 
     def select(self):
         self.cursor.execute("SELECT * FROM ActiveWindows")
