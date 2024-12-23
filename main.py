@@ -6,5 +6,5 @@ if __name__ == "__main__":
     start_system_tracker()
     print(systemTracker.system_info)
     start_trackers()
-    input("here...")
+    input("\nCapturing...")
     stop_trackers()

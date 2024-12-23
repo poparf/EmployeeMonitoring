@@ -7,7 +7,7 @@ print("Started system tracker")
 from capturing.WindowTracker import WindowTracker
 print("Started capturing windows")
 from capturing.PeriodicScreenshots import PeriodicScreenshots
-print("started pariodic screenshots")
+print("started periodic screenshots")
 systemTracker = SystemTracker()
 windowTracker = WindowTracker()
 periodicScreenshots = PeriodicScreenshots()

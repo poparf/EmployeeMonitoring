@@ -17,7 +17,6 @@ class WindowTrackerRepository:
             data = (data['title'], data['start_time'], data['duration'])
         else:
             return False
-        print(data)
         self.cursor.execute("INSERT INTO ActiveWindows (title, start_time, duration) VALUES (?, ?, ?)", data)
         self.conn.commit()
         return True

