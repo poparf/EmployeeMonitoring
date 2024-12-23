@@ -1,7 +1,6 @@
 import socket
 import os
 import platform
-from threading import Thread
 
 """"
 System tracker class find general information about the PC.
@@ -10,34 +9,21 @@ System tracker class find general information about the PC.
 - OS type
 - IP Address
 """
-class SystemTracker(Thread):
-    def __init__(self):
-        super().__init__()
-        self.system_info = {}
-
-    def run(self):
-        try:
-            self.system_info = {
-                'username': self.get_username(),
-                'computer_name': self.get_computer_name(),
-                'os': self.get_os(),
-                'ip': self.get_ip()
-            }
-        except Exception as e:
-            print(f"System tracking error: {e}")
-
-    # find the computer name
-    def get_computer_name(self):
-        return socket.gethostname()
-
-    # find the ip
-    def get_ip(self):
-        return socket.gethostbyname(socket.gethostname())
-
-    # find the os type
-    def get_os(self):
-        return platform.platform()
-
-    # get the username of the user logged in windows
-    def get_username(self):
-        return os.getlogin()
+class SystemTracker():
+    _instance = None
+    system_info = {}
+    
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = SystemTracker()
+            try:
+                SystemTracker.system_info = {
+                    'username': os.getlogin(),
+                    'computer_name': socket.gethostname(),
+                    'os': platform.platform(),
+                    'ip': socket.gethostbyname(socket.gethostname())
+                }
+            except Exception as e:
+                print(f"System tracking error: {e}")
+        return cls._instance        

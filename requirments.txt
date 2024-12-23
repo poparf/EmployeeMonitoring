@@ -1,0 +1,4 @@
+pynput
+pyautogui
+pygetwindow
+kafka-python-ng

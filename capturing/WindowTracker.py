@@ -3,9 +3,9 @@ import time
 from threading import Thread, Event
 import logging
 from db.repository.WindowTrackerRepository import WindowTrackerRepository
+from capturing.SystemTracker import SystemTracker
 
-
-from kafkadir import KafkaProducerWrapper
+from kafkadir.KafkaProducerWrapper import KafkaProducerWrapper
 
 class WindowTracker(Thread):
     def __init__(self, interval=0.5, logger=None):
@@ -59,8 +59,13 @@ class WindowTracker(Thread):
             self.window_history.append(new_window_history)
             window_tracker_repository = WindowTrackerRepository()
             window_tracker_repository.insert(new_window_history)
+            print("inserted..")
             self.logger.info(f"Window '{self.current_window_title}' active for {duration:.2f} seconds")
-
+            try:
+                self.producer.send_message(KafkaProducerWrapper.ACTIVE_WINDOW_TOPIC, new_window_history)
+            except Exception as e:
+                self.logger.error(f"Kafka error: {e}")
+                
         # Update current window tracking
         self.current_window_title = new_window.title
         self.current_window_start = current_time

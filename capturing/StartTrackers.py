@@ -1,20 +1,16 @@
 
 from capturing.KeyboardTracker import keyboardListener
-print("imported keyboardtracker")
+print("Imported keyboardtracker")
 #from capturing.MouseTracker import mouseListener
 from capturing.SystemTracker import SystemTracker
 print("Started system tracker")
 from capturing.WindowTracker import WindowTracker
 print("Started capturing windows")
 from capturing.PeriodicScreenshots import PeriodicScreenshots
-print("started periodic screenshots")
-systemTracker = SystemTracker()
+print("Started periodic screenshots")
+
 windowTracker = WindowTracker()
 periodicScreenshots = PeriodicScreenshots()
-
-def start_system_tracker():
-    systemTracker.start()
-    systemTracker.join()
 
 def start_trackers():
     windowTracker.start()
