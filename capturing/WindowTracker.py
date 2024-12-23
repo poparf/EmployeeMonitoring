@@ -3,6 +3,8 @@ import time
 from threading import Thread, Event
 import logging
 
+from kafkadir import KafkaProducerWrapper
+
 class WindowTracker(Thread):
     def __init__(self, interval=0.5, logger=None):
         """
@@ -17,6 +19,8 @@ class WindowTracker(Thread):
         self.window_history = []
         self.current_window_start = None
         self.current_window_title = None
+        
+        self.producer = KafkaProducerWrapper(['localhost:9092'])
 
     def run(self):
         """
