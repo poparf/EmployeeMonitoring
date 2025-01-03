@@ -1,5 +1,6 @@
 print("Importing")
 from capturing.StartTrackers import start_trackers, stop_trackers, SystemTracker
+#from kafkadir.KafkaConnectionChecker import KafkaConnectionChecker
 
 if __name__ == "__main__":
     print("Started")
@@ -31,6 +32,7 @@ if __name__ == "__main__":
         }
     }
     """
+  
     start_trackers()
     input("\nCapturing...")
     stop_trackers()

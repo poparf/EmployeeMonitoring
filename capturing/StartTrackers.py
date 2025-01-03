@@ -1,7 +1,14 @@
-
+"""
+This class manages a static variable that tells the other trackers if they can send messages to kafka
+If not then the data will be saved into sqlite db and sent later
+"""
+import time
+#from kafkadir.KafkaConnectionChecker import KafkaConnectionChecker
+#connChecker = KafkaConnectionChecker()
+#connChecker.start()
 from capturing.KeyboardTracker import keyboardListener
 print("Imported keyboardtracker")
-#from capturing.MouseTracker import mouseListener
+from capturing.MouseTracker import mouseListener
 from capturing.SystemTracker import SystemTracker
 print("Started system tracker")
 from capturing.WindowTracker import WindowTracker
